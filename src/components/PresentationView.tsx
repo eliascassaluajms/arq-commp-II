@@ -18,6 +18,7 @@ import {
   Radio,
   BookOpen
 } from 'lucide-react';
+import { ArchitecturalDiagramRenderer } from './ArchitecturalDiagrams/ArchitecturalDiagramRenderer';
 
 interface PresentationViewProps {
   initialUnitNumber?: number;
@@ -183,63 +184,136 @@ export const PresentationView: React.FC<PresentationViewProps> = ({
           </div>
         </div>
 
-        {/* Slide Main Content */}
-        <div className="my-auto py-8 space-y-6 relative z-10 max-w-4xl">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
-              {currentSlide.title}
-            </h2>
-            {currentSlide.subtitle && (
-              <p className="text-base sm:text-xl font-medium text-cyan-300 font-sans">
-                {currentSlide.subtitle}
-              </p>
-            )}
-          </div>
+        {/* Slide Main Content (Responsive dual column if diagramType exists) */}
+        {currentSlide.diagramType ? (
+          <div className="my-auto py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full relative z-10">
+            {/* Left Column: Theory, Bullets, and Pedagogy */}
+            <div className="lg:col-span-6 space-y-5">
+              <div className="space-y-2">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+                  {currentSlide.title}
+                </h2>
+                {currentSlide.subtitle && (
+                  <p className="text-sm sm:text-base font-medium text-cyan-300 font-sans">
+                    {currentSlide.subtitle}
+                  </p>
+                )}
+              </div>
 
-          {/* Paragraphs */}
-          {currentSlide.content && currentSlide.content.length > 0 && (
-            <div className="space-y-4 text-sm sm:text-lg text-slate-200 leading-relaxed">
-              {currentSlide.content.map((p, idx) => (
-                <p key={idx}>{p}</p>
-              ))}
+              {/* Paragraphs */}
+              {currentSlide.content && currentSlide.content.length > 0 && (
+                <div className="space-y-3 text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  {currentSlide.content.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* Bullets */}
+              {currentSlide.bullets && currentSlide.bullets.length > 0 && (
+                <ul className="space-y-2.5 pt-1">
+                  {currentSlide.bullets.map((b, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0 shadow-sm shadow-cyan-400" />
+                      <span className="leading-relaxed">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Analogy Box */}
+              {currentSlide.analogy && (
+                <div className="bg-amber-950/20 border border-amber-500/30 rounded-xl p-3.5 flex gap-3 items-start">
+                  <Lightbulb className="w-5 h-5 text-amber-400 shrink-0 mt-0.5 animate-pulse-subtle" />
+                  <div className="text-xs text-amber-200 leading-relaxed">
+                    <strong className="text-amber-300 block font-bold text-[10px] uppercase tracking-wider mb-0.5">
+                      Analogía Clave para el Alumno:
+                    </strong>
+                    {currentSlide.analogy}
+                  </div>
+                </div>
+              )}
+
+              {/* Key Takeaway */}
+              {currentSlide.keyIdea && (
+                <div className="bg-cyan-950/30 border border-cyan-500/40 rounded-xl p-3.5 flex gap-3 items-center">
+                  <Radio className="w-4 h-4 text-cyan-400 shrink-0 animate-pulse" />
+                  <span className="text-xs font-semibold text-cyan-200">
+                    {currentSlide.keyIdea}
+                  </span>
+                </div>
+              )}
             </div>
-          )}
 
-          {/* Bullets */}
-          {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-            <ul className="space-y-3 pt-2">
-              {currentSlide.bullets.map((b, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-xs sm:text-base text-slate-200">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400 mt-2 shrink-0 shadow-sm shadow-cyan-400" />
-                  <span className="leading-relaxed">{b}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {/* Analogy Callout Box */}
-          {currentSlide.analogy && (
-            <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-4 sm:p-5 flex gap-3.5 items-start">
-              <Lightbulb className="w-6 h-6 text-amber-400 shrink-0 mt-0.5 animate-pulse-subtle" />
-              <div className="text-xs sm:text-sm text-amber-200 leading-relaxed">
-                <strong className="text-amber-300 block font-bold text-xs uppercase tracking-wider mb-1">
-                  Analogía Clave para el Alumno:
-                </strong>
-                {currentSlide.analogy}
+            {/* Right Column: Architectural Interactive Hardware Diagram */}
+            <div className="lg:col-span-6">
+              <div className="glass-panel-glow rounded-3xl p-4 sm:p-5 border border-cyan-500/30 shadow-2xl relative">
+                <ArchitecturalDiagramRenderer 
+                  type={currentSlide.diagramType} 
+                  title={`Esquema Cátedra: ${currentSlide.title}`}
+                  allowExpand={true}
+                />
               </div>
             </div>
-          )}
-
-          {/* Key Takeaway / Idea */}
-          {currentSlide.keyIdea && (
-            <div className="bg-cyan-950/30 border border-cyan-500/40 rounded-2xl p-4 sm:p-5 flex gap-3.5 items-center">
-              <Radio className="w-5 h-5 text-cyan-400 shrink-0 animate-pulse" />
-              <span className="text-xs sm:text-sm font-semibold text-cyan-200">
-                {currentSlide.keyIdea}
-              </span>
+          </div>
+        ) : (
+          <div className="my-auto py-8 space-y-6 relative z-10 max-w-4xl mx-auto">
+            <div className="space-y-2">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                {currentSlide.title}
+              </h2>
+              {currentSlide.subtitle && (
+                <p className="text-base sm:text-xl font-medium text-cyan-300 font-sans">
+                  {currentSlide.subtitle}
+                </p>
+              )}
             </div>
-          )}
-        </div>
+
+            {/* Paragraphs */}
+            {currentSlide.content && currentSlide.content.length > 0 && (
+              <div className="space-y-4 text-sm sm:text-lg text-slate-200 leading-relaxed">
+                {currentSlide.content.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+            )}
+
+            {/* Bullets */}
+            {currentSlide.bullets && currentSlide.bullets.length > 0 && (
+              <ul className="space-y-3 pt-2">
+                {currentSlide.bullets.map((b, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-xs sm:text-base text-slate-200">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 mt-2 shrink-0 shadow-sm shadow-cyan-400" />
+                    <span className="leading-relaxed">{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Analogy Callout Box */}
+            {currentSlide.analogy && (
+              <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-4 sm:p-5 flex gap-3.5 items-start">
+                <Lightbulb className="w-6 h-6 text-amber-400 shrink-0 mt-0.5 animate-pulse-subtle" />
+                <div className="text-xs sm:text-sm text-amber-200 leading-relaxed">
+                  <strong className="text-amber-300 block font-bold text-xs uppercase tracking-wider mb-1">
+                    Analogía Clave para el Alumno:
+                  </strong>
+                  {currentSlide.analogy}
+                </div>
+              </div>
+            )}
+
+            {/* Key Takeaway / Idea */}
+            {currentSlide.keyIdea && (
+              <div className="bg-cyan-950/30 border border-cyan-500/40 rounded-2xl p-4 sm:p-5 flex gap-3.5 items-center">
+                <Radio className="w-5 h-5 text-cyan-400 shrink-0 animate-pulse" />
+                <span className="text-xs sm:text-sm font-semibold text-cyan-200">
+                  {currentSlide.keyIdea}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Slide Footer Navigation */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-white/10 pt-4 relative z-10 text-xs">

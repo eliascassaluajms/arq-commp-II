@@ -16,6 +16,13 @@ import {
   Check, 
   ExternalLink 
 } from 'lucide-react';
+import { 
+  AnimatedActivityIcon, 
+  AnimatedMemoryIcon, 
+  AnimatedNetworkIcon, 
+  AnimatedWormholeIcon, 
+  AnimatedCpuIcon 
+} from './AnimatedIcons/HardwareIcons';
 
 export const LaboratoriesView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'speedup' | 'coherence' | 'topology' | 'wormhole' | 'python_lab'>('speedup');
@@ -54,61 +61,61 @@ export const LaboratoriesView: React.FC = () => {
       <div className="flex flex-wrap gap-2 bg-slate-900/80 p-2 rounded-2xl border border-white/10">
         <button
           onClick={() => setActiveTab('speedup')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             activeTab === 'speedup'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Activity className="w-4 h-4" />
+          <AnimatedActivityIcon size="sm" />
           <span>1. Ley de Amdahl / Speedup</span>
         </button>
 
         <button
           onClick={() => setActiveTab('coherence')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             activeTab === 'coherence'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Layers className="w-4 h-4" />
+          <AnimatedMemoryIcon size="sm" />
           <span>2. Coherencia Snoopy (MESI)</span>
         </button>
 
         <button
           onClick={() => setActiveTab('topology')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             activeTab === 'topology'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Network className="w-4 h-4" />
+          <AnimatedNetworkIcon size="sm" />
           <span>3. Topologías de Red</span>
         </button>
 
         <button
           onClick={() => setActiveTab('wormhole')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             activeTab === 'wormhole'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Cpu className="w-4 h-4" />
+          <AnimatedWormholeIcon size="sm" />
           <span>4. Conmutación Wormhole</span>
         </button>
 
         <button
           onClick={() => setActiveTab('python_lab')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             activeTab === 'python_lab'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <FileCode className="w-4 h-4" />
+          <AnimatedCpuIcon size="sm" />
           <span>5. Script Práctica Python</span>
         </button>
       </div>

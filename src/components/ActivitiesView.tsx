@@ -14,11 +14,23 @@ import {
   Terminal,
   FolderGit2
 } from 'lucide-react';
+import { ArchitecturalDiagramRenderer, DiagramType } from './ArchitecturalDiagrams/ArchitecturalDiagramRenderer';
 
 export const ActivitiesView: React.FC = () => {
   const [selectedActivityId, setSelectedActivityId] = useState<string>(activityGuides[0].id);
 
   const activeActivity = activityGuides.find(a => a.id === selectedActivityId) || activityGuides[0];
+
+  const getActivityDiagramType = (id: string): DiagramType => {
+    switch (id) {
+      case 'caso-uajms': return 'cluster';
+      case 'caso-sicoes': return 'smp_numa';
+      case 'act-supercomputador': return 'cluster';
+      case 'act-proc-paralelo': return 'speedup';
+      case 'act-evaluacion-rendimiento': return 'cores';
+      default: return 'network';
+    }
+  };
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -106,6 +118,15 @@ export const ActivitiesView: React.FC = () => {
               <p className="text-slate-300 leading-relaxed">{activeActivity.specificCompetence}</p>
             </div>
           </div>
+        </div>
+
+        {/* Technical Architectural Diagram for Case Study / Activity */}
+        <div className="bg-slate-900/60 p-5 rounded-3xl border border-cyan-500/30 shadow-xl">
+          <ArchitecturalDiagramRenderer 
+            type={getActivityDiagramType(activeActivity.id)} 
+            title={`Esquema Técnico de Hardware: ${activeActivity.title}`}
+            allowExpand={true}
+          />
         </div>
 
         {/* Prerequisites */}

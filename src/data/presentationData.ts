@@ -101,6 +101,7 @@ export const presentationDecks: PresentationDeck[] = [
           "Si f = 0.90 (el 90% es paralelo, 10% secuencial), el Speedup NUNCA superará 10x.",
           "Si f = 0.50 (la mitad es secuencial), el Speedup NUNCA superará 2x, ¡aunque usemos 1,000,000 de núcleos!"
         ],
+        diagramType: 'speedup',
         keyIdea: "La parte secuencial irreductible del código domina el rendimiento a gran escala.",
         speakerNotes: "Este resultado sorprendió al mundo en 1967 y llevó a pensar que el paralelismo masivo fracasaría. Hasta que llegó John Gustafson."
       },
@@ -173,6 +174,7 @@ export const presentationDecks: PresentationDeck[] = [
           "Dragonfly: Grupos densos de routers conectados directamente. Diámetro ultrabajo de 3 saltos (Cray Slingshot)."
         ],
         keyIdea: "En supercómputo moderno, Dragonfly y Fat-Tree son los reyes indiscutibles de la baja latencia.",
+        diagramType: 'network',
         speakerNotes: "Mencionar el supercomputador Frontier en Oak Ridge: utiliza redes Dragonfly para conectar más de 9,000 nodos."
       },
       {
@@ -187,6 +189,7 @@ export const presentationDecks: PresentationDeck[] = [
           "Ventaja Wormhole: Requiere búferes minúsculos en los conmutadores y la latencia es prácticamente independiente de la distancia física."
         ],
         keyIdea: "En Wormhole, el mensaje se estira a través de múltiples conmutadores como un tren o un gusano.",
+        diagramType: 'wormhole',
         speakerNotes: "Ilustrar con la animación del tren: la locomotora es el flit de cabecera; si la locomotora para ante un semáforo rojo, todos los vagones quedan parados en las vías previas."
       },
       {
@@ -224,7 +227,7 @@ export const presentationDecks: PresentationDeck[] = [
           "El dilema: Si el Núcleo 0 escribe en la variable X en su caché y el Núcleo 1 lee X de su propia caché, ¡recibirá datos obsoletos!",
           "Garantizar coherencia significa que todos los núcleos deben ver un estado coherente y serializado de la memoria."
         ],
-        diagramType: 'coherence',
+        diagramType: 'smp_numa',
         speakerNotes: "Ilustrar el peligro con un saldo bancario: si dos cajeros automáticos leen un saldo de $1,000 en caché y ambos descuentan $800 sin invalidarse, el banco quiebra."
       },
       {
@@ -251,6 +254,7 @@ export const presentationDecks: PresentationDeck[] = [
           "MOESI: Agrega el estado Owner (O). Permite que múltiples núcleos lean una línea modificada sin tener que escribirla de inmediato a la lenta RAM."
         ],
         keyIdea: "MESI es el protocolo clásico de procesadores Intel; MOESI es ampliamente utilizado en procesadores AMD.",
+        diagramType: 'coherence',
         speakerNotes: "Presentar la tabla de transiciones: explicar qué significa BusRd, BusRdX (Read with Intent to Modify) y BusUpgr."
       },
       {
@@ -288,7 +292,7 @@ export const presentationDecks: PresentationDeck[] = [
           "cc-NUMA: Mantiene la coherencia de caché sobre toda la memoria distribuida de manera totalmente transparente para el programador.",
           "Interconexiones punto a punto de alta velocidad: Intel UPI (Ultra Path Interconnect) y AMD Infinity Fabric."
         ],
-        diagramType: 'cores',
+        diagramType: 'smp_numa',
         speakerNotes: "Destacar que cualquier servidor moderno con 2 o 4 sockets es una máquina NUMA. Si el programador no tiene cuidado con la afinidad de memoria, sufrirá penalizaciones de latencia."
       },
       {
@@ -306,6 +310,7 @@ export const presentationDecks: PresentationDeck[] = [
           "El Nodo Local envía un mensaje unicast al Home Node. El directorio consulta su tabla y despacha invalidaciones ÚNICAMENTE a los sharers reales."
         ],
         keyIdea: "El directorio convierte el tráfico ineficiente de broadcast en mensajes unicast punto a punto altamente escalables.",
+        diagramType: 'directory',
         speakerNotes: "Seguir el flujo paso a paso con flechas: Request -> Home Node -> Invalidation a Sharers -> Acks de vuelta al Requester."
       },
       {
@@ -446,6 +451,7 @@ export const presentationDecks: PresentationDeck[] = [
           "Serverless / FaaS: Funciones efímeras activadas por eventos. Escala automáticamente a cero; solo se paga por los milisegundos de cómputo reales."
         ],
         keyIdea: "A mayor nivel de abstracción, menor gestión de infraestructura y mayor foco en la lógica del negocio.",
+        diagramType: 'cluster',
         speakerNotes: "Cerrar la exposición conectando cómo todos los temas del semestre (multiprocesadores, redes, directorios, embebidos y nube) forman el ecosistema completo de la ingeniería informática."
       }
     ]

@@ -17,6 +17,7 @@ import {
   Mail,
   UserCheck
 } from 'lucide-react';
+import { ArchitecturalDiagramRenderer, DiagramType } from './ArchitecturalDiagrams/ArchitecturalDiagramRenderer';
 
 interface CurriculumViewProps {
   onNavigateToView: (view: ViewMode) => void;
@@ -27,6 +28,18 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onNavigateToView
   const [selectedEcId, setSelectedEcId] = useState<string>('EC1');
 
   const activeEc = competencyElements.find(ec => ec.id === selectedEcId) || competencyElements[0];
+
+  const getEcDiagramType = (unitNum: number): DiagramType => {
+    switch (unitNum) {
+      case 1: return 'flynn';
+      case 2: return 'network';
+      case 3: return 'coherence';
+      case 4: return 'directory';
+      case 5: return 'embedded';
+      case 6: return 'cloud';
+      default: return 'flynn';
+    }
+  };
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -250,6 +263,15 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onNavigateToView
                 ))}
               </ul>
             </div>
+          </div>
+
+          {/* Architectural Hardware Schematic of the Competency */}
+          <div className="bg-slate-900/60 p-5 rounded-3xl border border-cyan-500/30 shadow-xl">
+            <ArchitecturalDiagramRenderer 
+              type={getEcDiagramType(activeEc.unitNumber)} 
+              title={`Esquema de Hardware Oficial: ${activeEc.title}`}
+              allowExpand={true}
+            />
           </div>
 
           {/* Achievement Levels Matrix (Niveles de Logro) */}

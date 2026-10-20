@@ -70,8 +70,18 @@ export interface SlideItem {
   bullets?: string[];
   keyIdea?: string;
   analogy?: string;
-  codeSnippet?: string;
-  diagramType?: 'cores' | 'flynn' | 'network' | 'coherence' | 'embedded' | 'cloud';
+  diagramType?: 
+    | 'cores' 
+    | 'flynn' 
+    | 'speedup' 
+    | 'network' 
+    | 'wormhole' 
+    | 'smp_numa' 
+    | 'coherence' 
+    | 'directory' 
+    | 'embedded' 
+    | 'cloud' 
+    | 'cluster';
   speakerNotes: string; // Guión del docente
 }
 

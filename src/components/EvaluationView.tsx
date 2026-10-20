@@ -17,6 +17,12 @@ import {
   Filter,
   Volume2
 } from 'lucide-react';
+import { 
+  AnimatedQuizIcon, 
+  AnimatedExamIcon, 
+  AnimatedOralIcon, 
+  AnimatedTrophyIcon 
+} from './AnimatedIcons/EvaluationIcons';
 
 export const EvaluationView: React.FC = () => {
   const [evaluationMode, setEvaluationMode] = useState<'interactive_quiz' | 'timed_exam' | 'oral_defense'>('interactive_quiz');
@@ -173,37 +179,37 @@ export const EvaluationView: React.FC = () => {
       <div className="flex flex-wrap gap-2 bg-slate-900/80 p-2 rounded-2xl border border-white/10">
         <button
           onClick={() => setEvaluationMode('interactive_quiz')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             evaluationMode === 'interactive_quiz'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <HelpCircle className="w-4 h-4" />
+          <AnimatedQuizIcon size="sm" />
           <span>1. Modo Formativo (Banco con Explicación)</span>
         </button>
 
         <button
           onClick={() => setEvaluationMode('timed_exam')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             evaluationMode === 'timed_exam'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Clock className="w-4 h-4" />
+          <AnimatedExamIcon size="sm" />
           <span>2. Examen Escrito Cronometrado (30 min / 100 pts)</span>
         </button>
 
         <button
           onClick={() => setEvaluationMode('oral_defense')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95 ${
             evaluationMode === 'oral_defense'
               ? 'bg-cyan-500 text-black font-extrabold shadow-md shadow-cyan-500/20'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
         >
-          <Mic className="w-4 h-4" />
+          <AnimatedOralIcon size="sm" />
           <span>3. Simulador de Evaluación y Defensa Oral</span>
         </button>
       </div>
@@ -385,8 +391,8 @@ export const EvaluationView: React.FC = () => {
         <div className="glass-panel-glow rounded-3xl p-6 sm:p-10 space-y-8">
           {!examStarted ? (
             <div className="max-w-2xl mx-auto text-center space-y-6 py-8">
-              <div className="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto animate-ambient-glow">
-                <CheckSquare className="w-8 h-8" />
+              <div className="w-20 h-20 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto shadow-xl shadow-cyan-500/10">
+                <AnimatedExamIcon size="lg" />
               </div>
 
               <div className="space-y-2">
@@ -486,10 +492,8 @@ export const EvaluationView: React.FC = () => {
           ) : (
             /* Exam Results Report */
             <div className="max-w-xl mx-auto text-center space-y-6 py-6 animate-fadeIn">
-              <div className={`w-20 h-20 rounded-3xl flex items-center justify-center mx-auto text-white ${
-                examScore >= 70 ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400' : 'bg-rose-500/20 border border-rose-500/40 text-rose-400'
-              }`}>
-                <Award className="w-10 h-10" />
+              <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto shadow-xl">
+                <AnimatedTrophyIcon size="lg" />
               </div>
 
               <div className="space-y-2">

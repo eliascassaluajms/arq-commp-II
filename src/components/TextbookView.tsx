@@ -20,6 +20,7 @@ import { SpeedupSimulator } from './Simulators/SpeedupSimulator';
 import { CacheCoherenceSimulator } from './Simulators/CacheCoherenceSimulator';
 import { TopologyVisualizer } from './Simulators/TopologyVisualizer';
 import { WormholeSimulator } from './Simulators/WormholeSimulator';
+import { ArchitecturalDiagramRenderer, DiagramType } from './ArchitecturalDiagrams/ArchitecturalDiagramRenderer';
 
 interface TextbookViewProps {
   initialUnitNumber?: number;
@@ -32,6 +33,18 @@ export const TextbookView: React.FC<TextbookViewProps> = ({ initialUnitNumber = 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const currentUnit = textbookUnits.find(u => u.number === selectedUnitNum) || textbookUnits[0];
+
+  const getUnitDiagramType = (unitNum: number): DiagramType => {
+    switch (unitNum) {
+      case 1: return 'flynn';
+      case 2: return 'network';
+      case 3: return 'coherence';
+      case 4: return 'directory';
+      case 5: return 'embedded';
+      case 6: return 'cloud';
+      default: return 'flynn';
+    }
+  };
 
   // Search filter across all units and sections
   const filteredSections = searchQuery.trim() === ''
@@ -102,6 +115,15 @@ export const TextbookView: React.FC<TextbookViewProps> = ({ initialUnitNumber = 
         <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-4xl">
           {currentUnit.summary}
         </p>
+      </div>
+
+      {/* Unit Architectural Schematic Illustration */}
+      <div className="bg-slate-900/60 p-5 rounded-3xl border border-cyan-500/30 shadow-xl">
+        <ArchitecturalDiagramRenderer 
+          type={getUnitDiagramType(currentUnit.number)} 
+          title={`Esquema Canónico de Hardware • Unidad ${currentUnit.number}`}
+          allowExpand={true}
+        />
       </div>
 
       {/* Sections List */}
