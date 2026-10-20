@@ -1,0 +1,25 @@
+{
+  "name": "Arquitectura de Computadores II - UAJMS",
+  "short_name": "ArqComp2",
+  "description": "Texto Digital Interactivo y Plataforma de Enseñanza-Aprendizaje por Competencias",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080d1a",
+  "theme_color": "#00ccff",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "engineering", "books"]
+}

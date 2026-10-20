@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+code, pre, kbd {
+  font-family: 'Fira Code', monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080d1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Autonomous ambient animations (moving without mouseover) */
+@keyframes ambientGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(0, 204, 255, 0.4)) drop-shadow(0 0 12px rgba(0, 204, 255, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 9px rgba(0, 204, 255, 0.8)) drop-shadow(0 0 22px rgba(56, 189, 248, 0.4));
+  }
+}
+
+@keyframes dataBusShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes signalPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+@keyframes orbitSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-ambient-glow {
+  animation: ambientGlow 3s ease-in-out infinite;
+}
+
+.animate-data-shimmer {
+  background: linear-gradient(90deg, rgba(0,204,255,0.05) 0%, rgba(0,204,255,0.4) 50%, rgba(0,204,255,0.05) 100%);
+  background-size: 200% 100%;
+  animation: dataBusShimmer 2.5s infinite;
+}
+
+.animate-signal-pulse {
+  animation: signalPulse 2s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbitSpin 14s linear infinite;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-glow {
+  background: rgba(13, 21, 39, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 204, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Presentation slide mode transitions */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}

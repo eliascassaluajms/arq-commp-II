@@ -1,0 +1,31 @@
+# Node & Build artifacts
+node_modules/
+dist/
+build/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Office temporary files
+~$*.docx
+~$*.odt
+~$*.pptx
+~$*.xlsx
+
+# Antigravity & system artifacts
+.gemini/
+tsconfig.tsbuildinfo
