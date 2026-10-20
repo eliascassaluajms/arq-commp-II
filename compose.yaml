@@ -1,0 +1,11 @@
+services:
+  arq-comp-ii:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: arq_comp_ii_pwa
+    ports:
+      - "127.0.0.1:4174:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
