@@ -11,7 +11,11 @@ import {
   Maximize, 
   Minimize,
   Terminal,
-  Layers
+  Layers,
+  X,
+  Smartphone,
+  Monitor,
+  WifiOff
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -23,6 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState<boolean>(false);
+  const [showInstallModal, setShowInstallModal] = useState<boolean>(false);
 
   useEffect(() => {
     // Listen for PWA install prompt
@@ -47,13 +52,16 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setIsInstallable(false);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstallable(false);
+      }
+      setDeferredPrompt(null);
+    } else {
+      setShowInstallModal(true);
     }
-    setDeferredPrompt(null);
   };
 
   const toggleFullscreen = () => {
@@ -135,16 +143,15 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
 
           {/* Quick Actions (PWA install + Fullscreen toggle) */}
           <div className="flex items-center gap-2 shrink-0">
-            {isInstallable && (
-              <button
-                onClick={handleInstallClick}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-semibold transition-all active:scale-95 animate-pulse-subtle"
-                title="Instalar aplicación en dispositivo (PWA)"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Instalar App</span>
-              </button>
-            )}
+            <button
+              onClick={handleInstallClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-semibold transition-all active:scale-95 shadow-sm shadow-emerald-500/10"
+              title="Instalar como Aplicación PWA descargable (Offline)"
+            >
+              <Download className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline">Instalar PWA</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse hidden md:inline" />
+            </button>
 
             <button
               onClick={toggleFullscreen}
@@ -178,6 +185,66 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
           })}
         </div>
       </div>
+
+      {/* PWA Installation & Offline Guide Modal */}
+      {showInstallModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-slate-900 border border-cyan-500/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button
+              onClick={() => setShowInstallModal(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <Download className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">Instalar Aplicación (PWA)</h3>
+                <p className="text-xs text-slate-400">Texto Digital y Simuladores de Arquitectura de Computadores II</p>
+              </div>
+            </div>
+
+            <div className="space-y-3 my-4">
+              <div className="p-3 rounded-xl bg-slate-800/60 border border-white/5 flex items-start gap-3">
+                <WifiOff className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-300">
+                  <p className="font-semibold text-white mb-0.5">Acceso 100% Offline</p>
+                  El libro digital, las presentaciones magistrales y los simuladores funcionan sin conexión a internet una vez descargados en tu equipo o móvil.
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-800/60 border border-white/5 flex items-start gap-3">
+                <Monitor className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-300">
+                  <p className="font-semibold text-white mb-0.5">En Computadora (Chrome / Edge / Brave)</p>
+                  Haz clic en el ícono de instalación <strong className="text-cyan-300">(⊕ o botón "Instalar")</strong> en la barra de direcciones de tu navegador para añadirla como app de escritorio independiente.
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-800/60 border border-white/5 flex items-start gap-3">
+                <Smartphone className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-300">
+                  <p className="font-semibold text-white mb-0.5">En Celular / Tablet (Android / iOS)</p>
+                  • En Android (Chrome): Menú <strong className="text-slate-200">⋮</strong> &gt; <strong className="text-amber-300">"Instalar aplicación"</strong>.<br />
+                  • En iPhone/iPad (Safari): Botón <strong className="text-slate-200">Compartir</strong> &gt; <strong className="text-amber-300">"Agregar a inicio"</strong>.
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
+              <button
+                onClick={() => setShowInstallModal(false)}
+                className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs transition-colors"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
